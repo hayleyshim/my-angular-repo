@@ -11,10 +11,10 @@ phases:
   build:
     commands:
       - ng test --no-watch --no-progress --browsers=ChromeHeadlessCI
-artifacts:
-  base-directory: dist/my-angular-project
-  files:
-    - '**/*'
+# artifacts: #Uni Test 과정에서는 artifacts 필요없음
+#   base-directory: dist/my-angular-project
+#   files:
+#     - '**/*'
 cache:
   paths:
     - node_modules/**/* 
