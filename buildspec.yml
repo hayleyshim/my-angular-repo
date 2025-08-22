@@ -4,22 +4,26 @@ phases:
     runtime-versions:
       nodejs: 20
     commands:
+      # Angular CLI를 전역으로 설치합니다.
       - npm install -g @angular/cli@17
   pre_build:
     commands:
+      # 프로젝트 의존성을 설치합니다.
       - npm install
   build:
     commands:
-      - ng build -c production
+      # 빌드 결과물을 dist/my-angular-project 폴더에 생성합니다.
+      - ng build --configuration=production --output-path=dist/my-angular-project
       - echo "Build completed"
-    finally:
-      - echo This is the finally block execution!
+      # appspec.yml과 배포 스크립트 폴더를 빌드 결과물 폴더로 복사합니다.
+      - cp appspec.yml dist/my-angular-project/
+      - cp -r deploy-scripts dist/my-angular-project/
 artifacts:
-  # base-directory: dist/my-angular-project
+  # 모든 아티팩트가 모여있는 단일 디렉토리를 지정합니다.
+  base-directory: dist/my-angular-project
   files:
-    - 'dist/my-angular-project/**/*'
-    - appspec.yml
-    - 'deploy-scripts/**/*'
+    # 이 디렉토리 내의 모든 파일을 아티팩트에 포함합니다.
+    - '**/*'
 cache:
   paths:
-    - node_modules/**/* 
+    - node_modules/**/*
